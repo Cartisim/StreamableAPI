@@ -5,26 +5,41 @@ import Fluent
 protocol Repository: RequestService {}
 
 //create a  database repo protocol that coforms to our Repository Protocol
-protocol DataBaseRepository: Repository {
+protocol DatabaseRepository: Repository {
     var database: Database { get }
     init(database: Database)
 }
 
-//The Repositories that the application will use
-struct Repositories {
-    struct Provider {
-        static var database: Self {
-            .init {
-                
-                
-                
+extension DatabaseRepository {
+    func `for`(_ req: Request) -> Self {
+        return Self.init(database: req.db)
+    }
+}
+
+//The Repositories that the application will use, run that app
+extension Application {
+    struct Repositories {
+        struct Provider {
+            static var database: Self {
+                .init {
+                    $0.repositories.use { DatabaseUserRepository(database: $0.db) }
+                    $0.repositories.use { DatabaseEmailTokenRepository(database: $0.db) }
+                    $0.repositories.use { DatabaseRefreshTokenRepository(database: $0.db) }
+                    $0.repositories.use { DatabasePasswordTokenRepository(database: $0.db) }
+                }
             }
-        }
+        let run: (Application) -> ()
     }
     
     //make the repo then store it
+    //Start here after setting up repo
+    //1.
     final class Storage {
-        
+        var makeUserRepositroy: ((Application) -> UserRepository)?
+        var makeEmailTokenRepository: ((Application) -> EmailTokenRepository)?
+        var makeRefreshTokenRepository: ((Application) -> RefreshTokenRepository)?
+        var makePasswordTokenRepository: ((Application) -> PasswordTokenRepository)?
+        init() {}
     }
     
     //Our Key value is from our storage
@@ -32,8 +47,10 @@ struct Repositories {
         typealias Value = Storage
     }
     
+    //App instance
     let app: Application
     
+    //use the app and run it
     func use(_ provider: Provider) {
         provider.run(app)
     }
@@ -41,12 +58,14 @@ struct Repositories {
     //Set the value of our storage
     var storage: Storage {
         if app.storage[Key.self] == nil {
-            app.storage.[Key.self] = .init()
+            app.storage[Key.self] = .init()
         }
-        return app.storage[Key.self]
+        return app.storage[Key.self]!
     }
 }
 
+
 var repositories: Repositories {
     .init(app: self)
+}
 }

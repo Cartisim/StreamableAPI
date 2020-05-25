@@ -31,6 +31,12 @@ final class Video: Model, Content {
     @Field(key: "description")
     var description: String
     
+    @Siblings(through: OrderVideoPivot.self, from: \.$video, to: \.$order)
+    var order: [Order]
+    
+    @Siblings(through: CategoryVideoPivot.self, from: \.$video, to: \.$category)
+    var category: [Category]
+    
     init() {}
     
     init(id: UUID? = nil, title: String, posterString: String, videoString: String, rating: String, time: String, description: String) {

@@ -1,7 +1,9 @@
 import Vapor
-import Fluent
 import FluentPostgresDriver
+import Fluent
 import JWT
+import Mailgun
+import QueuesRedisDriver
 
 // configures your application
 public func configure(_ app: Application) throws {
@@ -38,11 +40,19 @@ public func configure(_ app: Application) throws {
     let corsMiddleware = CORSMiddleware(configuration: corsConfiguration)
     app.middleware = .init()
     app.middleware.use(corsMiddleware)
+    app.middleware.use(ErrorMiddleware.custom(environment: app.environment))
+    
+    // MARK: Mailgun
+    app.mailgun.configuration = .environment
+    app.mailgun.defaultDomain = .sandbox
     
     //Configure App
     app.config = .environment
     
     try routes(app)
+    try migrations(app)
+    try queues(app)
+    try services(app)
     
     if app.environment == .development {
         try app.autoMigrate().wait()

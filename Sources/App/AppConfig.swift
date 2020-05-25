@@ -3,16 +3,19 @@ import Vapor
 struct AppConfig {
     let apiURL: String
     let apiURLTest: String
+    let noReplyEmail: String
     
     static var environment: AppConfig {
         guard
             let apiURL = Environment.get("API_URL"),
-            let apiURLTest = Environment.get("API_URL_TEST")
-        else {
-            fatalError("Plese add app configuration to the environment variables")
+            let apiURLTest = Environment.get("API_URL_TEST"),
+            let noReplyEmail = Environment.get("NO_REPLY_EMAIL")
+            
+            else {
+                fatalError("Plese add app configuration to the environment variables")
         }
         
-        return .init(apiURL: apiURL, apiURLTest: apiURLTest)
+        return .init(apiURL: apiURL, apiURLTest: apiURLTest, noReplyEmail: noReplyEmail)
     }
 }
 

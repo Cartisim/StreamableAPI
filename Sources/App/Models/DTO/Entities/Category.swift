@@ -14,7 +14,7 @@ final class Category: Codable, Model, Content {
     @Field(key: "category_name")
     var categoryName: String
     
-    @Siblings(through: VideoCategoryPivot.self, from: \.$category, to: \.$video)
+    @Siblings(through: CategoryVideoPivot.self, from: \.$category, to: \.$video)
          var video: [Video]
     
     init() {}

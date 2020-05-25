@@ -1,8 +1,8 @@
 import Vapor
 import Fluent
 
-final class VideoCategoryPivot: Model {
-    static let schema: String = "course_category"
+final class CategoryVideoPivot: Model {
+    static let schema: String = "category_video"
     
     @ID(key: .id)
     var id: UUID?
