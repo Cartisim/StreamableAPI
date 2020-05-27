@@ -14,7 +14,8 @@ extension Order {
                  .field("quantity", .int, .required)
                  .field("price", .int, .required)
                  .field("is_purchased", .bool, .required)
-                 .field("courseid", .string, .required)
+                 .field("videoid", .string, .required)
+                 .field("created_at", .datetime, .required)
                 .field("user_id", .uuid, .required, .references("user", "id", onDelete: .cascade, onUpdate: .noAction))
                 .create()
         }

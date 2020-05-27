@@ -2,7 +2,7 @@ import Vapor
 import Fluent
 
 final class RefreshToken: Model {
-    static let schema = "user_refresh_token"
+    static let schema = "user_refresh_tokens"
     
     @ID(key: .id)
     var id: UUID?
@@ -21,7 +21,7 @@ final class RefreshToken: Model {
     
     init() {}
     
-    init(id: UUID?, token: String, userID: UUID, expiresAt: Date = Date().addingTimeInterval(Constants.shared.REFRESH_TOKEN_LIFETIME), issuedAt: Date = Date()) {
+    init(id: UUID? = nil, token: String, userID: UUID, expiresAt: Date = Date().addingTimeInterval(Constants.shared.REFRESH_TOKEN_LIFETIME), issuedAt: Date = Date()) {
         self.id = id
         self.token = token
         self.$user.id = userID

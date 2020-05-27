@@ -1,7 +1,7 @@
 import Vapor
 import Fluent
 
-final class Channel: Codable, Model, Authenticatable, Content {
+final class Channel: Codable, Model  {
 
     typealias Input = _Input
     typealias Output = _Output
@@ -18,16 +18,10 @@ final class Channel: Codable, Model, Authenticatable, Content {
     var title: String
     
     @Children(for: \.$channel)
-    var subChannelID: [SubChannel]
+    var subChannel: [SubChannel]
 
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
-    
-    @Timestamp(key: "updated_at", on: .update)
-    var updatedAt: Date?
-    
-    @Timestamp(key: "deleted_at", on: .delete)
-    var deletedAt: Date?
     
        init() {}
     

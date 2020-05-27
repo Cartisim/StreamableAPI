@@ -4,6 +4,13 @@ import Vapor
 
 extension Category.Input: Validatable {
     static func validations(_ validations: inout Validations) {
-        validations.add("category_name", as: String.self, is: !.empty)
+        validations.add("categoryName", as: String.self, is: !.empty)
     }
 }
+
+extension Category {
+    convenience init(from category: Category.Input) throws {
+        self.init(categoryName: category.categoryName)
+    }
+}
+

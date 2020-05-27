@@ -14,6 +14,7 @@ extension Video {
                  .field("rating", .string, .required)
                  .field("time", .string, .required)
                  .field("description", .string, .required)
+                 .field("created_at", .datetime, .required)
                 .create()
         }
         

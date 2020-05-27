@@ -1,9 +1,9 @@
 import Vapor
 import Fluent
 
-final class Category: Codable, Model, Content {
+final class Category: Codable, Model {
+    
     typealias Input = _Input
-
     typealias Output = _Output
     
     static let schema = "category"
@@ -14,27 +14,17 @@ final class Category: Codable, Model, Content {
     @Field(key: "category_name")
     var categoryName: String
     
+    @Timestamp(key: "created_at", on: .create)
+    var createdAt: Date?
+    
     @Siblings(through: CategoryVideoPivot.self, from: \.$category, to: \.$video)
          var video: [Video]
     
     init() {}
     
-    init(id: UUID?, categoryName: String) {
+    init(id: UUID? = nil, categoryName: String) {
         self.id = id
         self.categoryName = categoryName
-    }
-    
-    
-    init(_ input: Input) throws {
-        self.categoryName = input.categoryName
-    }
-    
-    func update(_ input: Input) throws {
-        self.categoryName = input.categoryName
-    }
-    
-    var output: Output {
-        .init(id: self.id!.uuidString, categoryName: self.categoryName, video: self.video)
     }
 }
 

@@ -33,12 +33,6 @@ final class User: Codable, Model, Authenticatable, Content {
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
-    @Timestamp(key: "updated_at", on: .update)
-    var updatedAt: Date?
-    
-    @Timestamp(key: "deleted_at", on: .delete)
-    var deletedAt: Date?
-    
     @Children(for: \.$user)
     var order: [Order]
     
@@ -47,7 +41,7 @@ final class User: Codable, Model, Authenticatable, Content {
     
     init() {}
     
-    init(id: UUID? = nil, username: String, email: String, passwordHash: String, profilePhotoString: String = "", isAdmin: Bool = false, isEmailVerified: Bool = false) {
+    init(id: UUID? = nil, username: String, email: String, passwordHash: String, profilePhotoString: String = "", isAdmin: Bool = false, isEmailVerified: Bool = true) {
         self.id = id
         self.username = username
         self.email = email

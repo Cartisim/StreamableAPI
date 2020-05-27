@@ -31,6 +31,9 @@ final class Video: Model, Content {
     @Field(key: "description")
     var description: String
     
+    @Timestamp(key: "created_at", on: .create)
+    var createdAt: Date?
+    
     @Siblings(through: OrderVideoPivot.self, from: \.$video, to: \.$order)
     var order: [Order]
     

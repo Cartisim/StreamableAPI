@@ -1,7 +1,7 @@
 import Vapor
 import Fluent
 
-final class Order: Codable, Model, Authenticatable, Content {
+final class Order: Codable, Model {
     
     typealias Input = _Input
     typealias Output = _Output
@@ -26,7 +26,7 @@ final class Order: Codable, Model, Authenticatable, Content {
     @Field(key: "price")
     var price: Int
     
-    @Field(key: "is_Purchased")
+    @Field(key: "is_purchased")
     var isPurchased: Bool
     
     @Field(key: "videoid")
@@ -35,21 +35,15 @@ final class Order: Codable, Model, Authenticatable, Content {
     @Parent(key: "user_id")
     var user: User
     
-    @Siblings(through: OrderVideoPivot.self, from: \.$order, to: \.$video)
-    var video: [Video]
-    
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
-    @Timestamp(key: "updated_at", on: .update)
-    var updatedAt: Date?
-    
-    @Timestamp(key: "deletted_at", on: .delete)
-    var deletedAt: Date?
+    @Siblings(through: OrderVideoPivot.self, from: \.$order, to: \.$video)
+    var video: [Video]
     
        init() {}
     
-    init(id: UUID?, productName: String, imageString: String, currency: String, quantity: Int, price: Int, isPurchased: Bool, videoid: String, userID: User.IDValue) {
+    init(id: UUID? = nil, productName: String, imageString: String, currency: String, quantity: Int, price: Int, isPurchased: Bool, videoid: String, userID: User.IDValue) {
         self.id = id
         self.productName = productName
         self.imageString = imageString

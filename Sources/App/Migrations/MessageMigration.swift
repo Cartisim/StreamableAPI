@@ -12,6 +12,7 @@ extension Message {
                 .field("username", .string, .required)
                 .field("message", .string, .required)
                 .field("sub_channel_id", .uuid, .required, .references("sub_channel", "id", onDelete: .cascade, onUpdate: .noAction))
+                 .field("created_at", .datetime, .required)
                 .field("user_id", .uuid, .references("user", "id", onDelete: .cascade, onUpdate: .noAction))
                 .create()
         }

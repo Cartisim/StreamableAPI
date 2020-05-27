@@ -4,8 +4,14 @@ import Vapor
 
 extension Channel.Input: Validatable {
     static func validations(_ validations: inout Validations) {
-        validations.add("image_string", as: String.self, is: !.empty)
+        validations.add("imageString", as: String.self, is: !.empty)
         validations.add("title", as: String.self, is: !.empty)
         
+    }
+}
+
+extension Channel {
+    convenience init(from channel: Channel.Input) throws {
+        self.init(imageString: channel.imageString, title: channel.title)
     }
 }

@@ -12,6 +12,7 @@ extension User {
                 .field("profile_photo_string", .string, .required)
                 .field("is_admin", .bool, .required, .custom("DEFAULT FALSE"))
                 .field("is_email_verified", .bool, .required, .custom("DEFAULT FALSE"))
+                 .field("created_at", .datetime, .required)
                 .unique(on: "email")
                 .create()
         }

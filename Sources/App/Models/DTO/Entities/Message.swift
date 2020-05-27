@@ -1,7 +1,7 @@
 import Vapor
 import Fluent
 
-final class Message: Codable, Model, Authenticatable, Content {
+final class Message: Codable, Model {
     
     typealias Input = _Input
     typealias Output = _Output
@@ -20,7 +20,7 @@ final class Message: Codable, Model, Authenticatable, Content {
     @Field(key: "message")
     var message: String
     
-    @Parent(key: "sub_channel")
+    @Parent(key: "sub_channel_id")
     var subChannel: SubChannel
     
     @Parent(key: "user_id")
@@ -29,15 +29,9 @@ final class Message: Codable, Model, Authenticatable, Content {
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
-    @Timestamp(key: "updated_at", on: .update)
-    var updatedAt: Date?
-    
-    @Timestamp(key: "deletted_at", on: .delete)
-    var deletedAt: Date?
-    
        init() {}
     
-    init(id: UUID?, profilePhotoString: String, username: String, message: String, subChannelID: SubChannel.IDValue, userID: User.IDValue) {
+    init(id: UUID? = nil, profilePhotoString: String, username: String, message: String, subChannelID: SubChannel.IDValue, userID: User.IDValue) {
         self.id = id
         self.profilePhotoString = profilePhotoString
         self.username = username

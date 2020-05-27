@@ -6,7 +6,7 @@ extension User.Input: Validatable {
     static func validations(_ validations: inout Validations) {
         validations.add("username", as: String.self, is: !.empty)
         validations.add("email", as: String.self, is: !.empty)
-        validations.add("profile_photo_string", as: String.self, is: !.empty)
+        validations.add("profilePhotoString", as: String.self, is: !.empty)
     }
 }
 

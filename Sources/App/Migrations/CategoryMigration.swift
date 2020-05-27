@@ -9,6 +9,7 @@ extension Category {
             database.schema("category")
             .id()
                 .field("category_name", .string, .required)
+                 .field("created_at", .datetime, .required)
             .create()
         }
         

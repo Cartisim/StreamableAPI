@@ -3,7 +3,7 @@ import Fluent
 
 final class OrderVideoPivot: Model {
     // Name of the table or collection.
-    static let schema: String = "order_course"
+    static let schema: String = "order_video"
 
     // Unique identifier for this pivot.
     @ID(key: .id)

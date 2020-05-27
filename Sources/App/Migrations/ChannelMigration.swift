@@ -7,9 +7,11 @@ extension Channel {
     struct Migration: Fluent.Migration {
         func prepare(on database: Database) -> EventLoopFuture<Void> {
             database.schema("channel")
-            .id()
-                .field("channel_name", .string, .required)
-            .create()
+                .id()
+                .field("title", .string, .required)
+                .field("image_string", .string, .required)
+                 .field("created_at", .datetime, .required)
+                .create()
         }
         
         func revert(on database: Database) -> EventLoopFuture<Void> {

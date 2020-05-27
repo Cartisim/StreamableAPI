@@ -4,8 +4,14 @@ import Vapor
 
 extension SubChannel.Input: Validatable {
     static func validations(_ validations: inout Validations) {
-        validations.add("image_string", as: String.self, is: !.empty)
+        validations.add("imageString", as: String.self, is: !.empty)
         validations.add("title", as: String.self, is: !.empty)
         
+    }
+}
+
+extension SubChannel {
+    convenience init(from subChannel: SubChannel.Input) throws {
+        self.init(imageString: subChannel.imageString, title: subChannel.title, channelID: subChannel.channelID, userID: subChannel.userID)
     }
 }
