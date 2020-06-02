@@ -9,12 +9,14 @@ extension Video {
             database.schema("video")
                 .id()
                 .field("title", .string, .required)
+                .field("price", .int, .required)
                 .field("poster_string", .string, .required)
                 .field("video_string", .string, .required)
-                 .field("rating", .string, .required)
-                 .field("time", .string, .required)
-                 .field("description", .string, .required)
-                 .field("created_at", .datetime, .required)
+                .field("rating", .string, .required)
+                .field("time", .string, .required)
+                .field("description", .string, .required)
+                .field("genre", .string, .required)
+                .field("created_at", .datetime, .required)
                 .create()
         }
         
@@ -22,6 +24,6 @@ extension Video {
             database.schema("video").delete()
         }
         
-        var name: String {"CreateVideor"}
+        var name: String {"CreateVideo"}
     }
 }

@@ -3,13 +3,16 @@ import Fluent
 
 struct OrderController {
     
-    func postOrder(_ req: Request) throws -> EventLoopFuture<HTTPStatus> {
+    func postOrder(_ req: Request) throws -> EventLoopFuture<Response> {
         try Order.Input.validate(req)
         let order = try req.content.decode(Order.Input.self)
         let model = try Order(from: order)
+      
         return req.orders
             .create(model)
-            .transform(to: HTTPStatus.created)
+            .map { res in
+                return Response(status: .ok, body: Response.Body(string: model.id?.uuidString ?? ""))
+        }
     }
     
     

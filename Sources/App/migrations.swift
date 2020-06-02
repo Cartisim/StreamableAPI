@@ -2,6 +2,7 @@ import Vapor
 
 func migrations(_ app: Application) throws {
     app.migrations.add(User.Migration())
+    app.migrations.add(AdminAccount())
     app.migrations.add(CreatePasswordToken())
     app.migrations.add(CreateRefreshToken())
     app.migrations.add(Channel.Migration())

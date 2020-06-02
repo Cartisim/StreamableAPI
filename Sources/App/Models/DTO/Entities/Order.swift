@@ -52,7 +52,7 @@ final class Order: Codable, Model {
         self.price = price
         self.isPurchased = isPurchased
         self.videoid = videoid
-        self.user.id = userID
+        self.$user.id = userID
     }
     
 }

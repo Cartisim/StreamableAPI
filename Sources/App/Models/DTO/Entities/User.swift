@@ -8,7 +8,6 @@ final class User: Codable, Model, Authenticatable, Content {
     
     static let schema = "user"
     
-    
     @ID(key: .id)
     var id: UUID?
     

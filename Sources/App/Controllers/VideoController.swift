@@ -40,19 +40,21 @@ struct VideoController {
     
     func editVideo(_ request: Request) throws -> EventLoopFuture<Video.Input> {
         guard let id = request.parameters.get(Constants.shared.VIDEO_ID_STRING, as: UUID.self) else { throw Abort(.badRequest) }
-        let course = try request.content.decode(Video.Input.self)
+        let video = try request.content.decode(Video.Input.self)
         let foundCourse = Video.find(id, on: request.db)
         return foundCourse
             .unwrap(or: Abort(.notFound))
             .flatMap { updateVideo in
-                updateVideo.title = course.title
-                 updateVideo.posterString = course.posterString
-                 updateVideo.videoString = course.videoString
-                 updateVideo.rating = course.rating
-                 updateVideo.time = course.time
-                 updateVideo.description = course.description
+                updateVideo.title = video.title
+                updateVideo.price = video.price
+                 updateVideo.posterString = video.posterString
+                 updateVideo.videoString = video.videoString
+                 updateVideo.rating = video.rating
+                 updateVideo.time = video.time
+                 updateVideo.description = video.description
+                updateVideo.genre = video.genre
                 return updateVideo.save(on: request.db)
-                    .map { Video.Input(title: updateVideo.title, posterString: updateVideo.posterString, videoString: updateVideo.videoString, rating: updateVideo.rating, time: updateVideo.time, description: updateVideo.description)
+                    .map { Video.Input(title: updateVideo.title, price: updateVideo.price, posterString: updateVideo.posterString, videoString: updateVideo.videoString, rating: updateVideo.rating, time: updateVideo.time, description: updateVideo.description, genre: updateVideo.genre)
                 }
         }
     }

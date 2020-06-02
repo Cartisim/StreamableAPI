@@ -10,11 +10,12 @@ extension Video.Input: Validatable {
         validations.add("rating", as: String.self, is: !.empty)
         validations.add("time", as: String.self, is: !.empty)
         validations.add("description", as: String.self, is: !.empty)
+        validations.add("genre", as: String.self, is: !.empty)
     }
 }
 
 extension Video {
     convenience init(from video: Video.Input) throws {
-        self.init(title: video.title, posterString: video.posterString, videoString: video.videoString, rating: video.rating, time: video.time, description: video.description)
+        self.init(title: video.title, price: video.price, posterString: video.posterString, videoString: video.videoString, rating: video.rating, time: video.time, description: video.description, genre: video.genre)
     }
 }

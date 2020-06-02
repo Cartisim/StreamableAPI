@@ -47,10 +47,18 @@ public func configure(_ app: Application) throws {
     app.mailgun.configuration = .environment
     app.mailgun.defaultDomain = .sandbox
     
+//        // Create a new NIO websocket server
+//        let wss = NIOWebSocketServer.default()
+//        try socketRouter(wss)
+//        // Register our server
+//    
+//        services.register(wss, as: WebSocketServer.self)
+    
     //Configure App
     app.config = .environment
     
     try routes(app)
+    try sockets(app)
     try migrations(app)
     try queues(app)
     try services(app)

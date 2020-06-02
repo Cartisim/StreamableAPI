@@ -25,6 +25,8 @@ struct DatabaseOrderRepository: OrderRepository, DatabaseRepository {
         
         func all() -> EventLoopFuture<[Order]> {
             return Order.query(on: database)
+                .filter(\.$id == \._$id)
+                                .with(\.$video)
                 .sort(\.$createdAt, .descending).all()
         }
         

@@ -48,26 +48,26 @@ func routes(_ app: Application) throws {
         
         //MARK: Category Routes
         let categoryController = CategoryController()
-        tokenProtected.post(Constants.shared.CATEGORY, use: categoryController.postCategory)
+        adminProtected.post(Constants.shared.CATEGORY, use: categoryController.postCategory)
         adminProtected.post(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, use: categoryController.editCategory)
         adminProtected.post(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, Constants.shared.VIDEO, Constants.shared.VIDEO_ID, use: categoryController.addCourseToCategory)
-        api.put(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, use: categoryController.editCategory)
-        api.delete(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, use: categoryController.deleteCategory)
+        adminProtected.put(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, use: categoryController.editCategory)
+        adminProtected.delete(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, use: categoryController.deleteCategory)
         api.get(Constants.shared.CATEGORY, Constants.shared.CATEGORY_ID, use: categoryController.fetchEagerCategory)
         api.get(Constants.shared.CATEGORY, use: categoryController.fetchEagerCategories)
         
         //MARK: Order Routes
         let orderController = OrderController()
         tokenProtected.post(Constants.shared.ORDER, Constants.shared.ORDER_ID, Constants.shared.VIDEO, Constants.shared.VIDEO_ID, use: orderController.addVideoToOrder)
-        tokenProtected.get(Constants.shared.ORDER, use: orderController.fetchEagerOrders)
-        tokenProtected.get(Constants.shared.VIDEO_ORDER, Constants.shared.ORDER_ID, use: orderController.fetchEagerOrders)
-        tokenProtected.get(Constants.shared.ORDER, Constants.shared.ORDER_ID, use: orderController.fetchEagerOrder)
+        tokenProtected.post(Constants.shared.ORDER, use: orderController.postOrder)
+        adminProtected.get(Constants.shared.ORDER, use: orderController.fetchEagerOrders)
+        purchasedProtected.get(Constants.shared.ORDER, Constants.shared.ORDER_ID, use: orderController.fetchEagerOrder)
         
         //MARK: Video Routes
         let videoController = VideoController()
         api.get(Constants.shared.CATEGORY_VIDEO, use: categoryController.fetchCategoriesVideos)
         api.get(Constants.shared.CATEGORY_VIDEO, Constants.shared.CATEGORY_ID, use: categoryController.fetchCategoryVideos)
-        adminProtected.post(Constants.shared.VIDEO, use: videoController.postVideo)
+        tokenProtected.post(Constants.shared.VIDEO, use: videoController.postVideo)
         adminProtected.put(Constants.shared.VIDEO, Constants.shared.VIDEO_ID, use: videoController.editVideo)
         adminProtected.delete(Constants.shared.VIDEO, Constants.shared.VIDEO_ID, use: videoController.deleteVideo)
         tokenProtected.get(Constants.shared.VIDEO, Constants.shared.VIDEO_ID, use: videoController.fetchEagerVideo)
@@ -75,9 +75,9 @@ func routes(_ app: Application) throws {
         
         //MARK: Channel Routes
         let channelController = ChannelController()
-        tokenProtected.post(Constants.shared.CHANNEL, use: channelController.postChannel)
+//        tokenProtected.post(Constants.shared.CHANNEL, use: channelController.postChannel)
         tokenProtected.get(Constants.shared.CHANNEL, Constants.shared.CHANNEL_ID, use: channelController.fetchEagerChannel)
-        tokenProtected.get(Constants.shared.CHANNEL, use: channelController.fetchEagerChannels)
+//        tokenProtected.get(Constants.shared.CHANNEL, use: channelController.fetchEagerChannels)
         tokenProtected.delete(Constants.shared.CHANNEL, Constants.shared.CHANNEL_ID, use: channelController.deleteChannel)
         
         //MARK: SubChannel Routes
